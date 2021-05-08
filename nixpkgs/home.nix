@@ -18,4 +18,21 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "21.05";
+
+  programs.vim = {
+    enable = true;
+    settings = {
+      expandtab = true;
+      shiftwidth = 2;
+      tabstop = 2;
+    };
+  };
+  programs.git = {
+    enable = true;
+    userName = "voli";
+    userEmail = "vadim.oliinyk@gmail.com";
+    aliases = {
+      st = "status";
+    };
+  };
 }

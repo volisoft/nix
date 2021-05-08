@@ -1,3 +1,8 @@
+- Clone this repository into ~/x directory
+- cd ~/.config && ln -s ~/x/nix/nixpkgs nixpkgs
+- export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+- home-manager switch
+
 **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 
 When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
