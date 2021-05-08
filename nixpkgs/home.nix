@@ -35,4 +35,48 @@
       st = "status";
     };
   };
+  programs.emacs = {
+    enable = true;
+  };
+  programs.vscode = {
+    enable = true;
+    extensions = (with pkgs.vscode-extensions; [
+      # ms-python.python
+      ms-vscode-remote.remote-ssh
+    ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    {
+      name = "scala";
+      publisher = "scala-lang";
+      version = "0.5.3";
+      sha256 = "0isw8jh845hj2fw7my1i19b710v3m5qsjy2faydb529ssdqv463p";
+    }
+    {
+      name = "metals";
+      publisher = "scalameta";
+      version = "1.10.4";
+      sha256 = "0q6zjpdi98png4vpzz39q85nxmsh3h1nnan58saz5rr83d6jgj89";
+    }
+  ];
+  };
+  # Allow non-free software (e.g. ms-vscode-remote.remote-ssh)
+  nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.programs.java.enable;
+
+  home.packages = with pkgs; [
+
+    #utils
+    htop
+    jq
+    wget
+    zip
+    unzip
+    tree
+
+    #dev
+    tmux
+    graphviz
+#    jetbrains.idea-community
+  ];
+
 }

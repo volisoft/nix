@@ -3,6 +3,9 @@
 - export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 - home-manager switch
 
+## Modularizing config
+https://github.com/mjstewart/nix-home-manager/blob/master/home.nix
+
 **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 
 When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
