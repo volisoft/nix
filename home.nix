@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let
+  vscode-config = pkgs.callPackage ./apps/vscode-config.nix {};
+
+in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -61,8 +65,6 @@
   # Allow non-free software (e.g. ms-vscode-remote.remote-ssh)
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.programs.java.enable;
-
   home.packages = with pkgs; [
     jdk
 
@@ -80,4 +82,8 @@
 #    jetbrains.idea-community
   ];
 
+
+  news.display = "silent";
+
+  home.file.".config/Code/User/settings.json".text = builtins.toJSON vscode-config.settings;
 }

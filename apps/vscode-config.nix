@@ -1,4 +1,4 @@
-{lib, zsh}: 
+{lib, ... }: 
 
 {
   settings = {
@@ -9,13 +9,11 @@
       trimTrailingWhitespace = true;
     };
 
- 
-    
-    files.watcherExclude = {
-       "**/.bloop" =  true;
-       "**/.metals" = true;
-       "**/.ammonite" = true;
-       "**/.*cache" = true;
+    "files.watcherExclude" = {
+        "**/.bloop" =  true;
+        "**/.metals" = true;
+        "**/.ammonite" = true;
+        "**/.*cache" = true;
     };
 
     editor = {
@@ -27,5 +25,7 @@
       renderControlCharacters = "true";
       renderWhitespace = "boundary";
     };
+
+    "metals.javaHome" = "/home/dev/.nix-profile/lib/openjdk";
   };
 }
