@@ -64,6 +64,7 @@
   nixpkgs.programs.java.enable;
 
   home.packages = with pkgs; [
+    jdk
 
     #utils
     htop
