@@ -2,7 +2,8 @@
 
 let
   vscode-config = pkgs.callPackage ./apps/vscode-config.nix {};
-
+  # Remove after aarch64-linux is added to the official pkgs derivation 
+  jetbrains = pkgs.callPackage ./apps/jbidea {};
 in
 {
   # Let Home Manager install and manage itself.
@@ -79,7 +80,7 @@ in
     #dev
     tmux
     graphviz
-#    jetbrains.idea-community
+    #jetbrains.idea-community
   ];
 
 

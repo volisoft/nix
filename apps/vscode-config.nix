@@ -1,4 +1,4 @@
-{lib, ... }: 
+{lib, jdk, ... }: 
 
 {
   settings = {
@@ -26,6 +26,6 @@
       renderWhitespace = "boundary";
     };
 
-    "metals.javaHome" = "/home/dev/.nix-profile/lib/openjdk";
+    "metals.javaHome" = "${jdk}";
   };
 }
