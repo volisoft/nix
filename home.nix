@@ -58,7 +58,7 @@ in
     bash = {
       enable = true;
       initExtra = ''
-      source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+        source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       '';
     };
     emacs = {
@@ -140,6 +140,8 @@ in
     tree
 
     #dev
+    # clojure-lsp
+    metals
     graphviz
     #jetbrains.idea-community
 
