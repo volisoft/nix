@@ -8,7 +8,6 @@ https://github.com/mjstewart/nix-home-manager/blob/master/home.nix
 Wiki https://nixos.wiki/wiki/Home_Manager
 Example of home and system conifg with syncthing
 https://github.com/srid/nixos-config
-https://github.com/srid/nix-config
 Another home config https://github.com/yrashk/nix-home/blob/master/home.nix
 Emacs prelude config https://gitlab.com/rycee/configurations/-/blob/master/user/emacs.nix
 Nix tutorial https://github.com/samdroid-apps/nix-articles/blob/master/05-using-functions.md 

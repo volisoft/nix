@@ -1,11 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  vscode-config = pkgs.callPackage ./apps/vscode-config.nix {};
-  # Remove after aarch64-linux is added to the official pkgs derivation 
-  jetbrains = pkgs.callPackage ./apps/jbidea {};
-in
-{
+  vscode-config = pkgs.callPackage ./apps/vscode-config.nix { };
+  # Remove after aarch64-linux is added to the official pkgs derivation
+  jetbrains = pkgs.callPackage ./apps/jbidea { };
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -25,12 +24,23 @@ in
   home.stateVersion = "21.05";
 
   home = {
+    # Doom Emacs config
     file.".emacs.d".source = "${config.xdg.configHome}/.emacs.d";
     sessionPath = [ "${config.xdg.configHome}/.emacs.d/bin" ];
     sessionVariables = {
       DOOMDIR = "${config.xdg.configHome}/.doom.d";
       DOOMLOCALDIR = "${config.xdg.configHome}/.doom-local";
     };
+
+    # Syncthing
+    file.".config/syncthing/config.xml".source = ./apps/syncthing/config.xml;
+    file."x/.stignore".source = ./apps/syncthing/.stignore;
+    file.".config/syncthingtray.ini".source =
+      ./apps/syncthing/syncthingtray.ini;
+
+    # VSCode config
+    file.".config/Code/User/settings.json".text =
+      builtins.toJSON vscode-config.settings;
   };
 
   xdg = {
@@ -40,7 +50,7 @@ in
       ".doom.d/init.el".source = ./apps/emacs/init.el;
       ".doom.d/packages.el".source = ./apps/emacs/packages.el;
       ".emacs.d" = {
-        source  = builtins.fetchGit "https://github.com/hlissner/doom-emacs";
+        source = builtins.fetchGit "https://github.com/hlissner/doom-emacs";
         onChange = "${pkgs.writeShellScript "doom-change" ''
           export DOOMDIR="${config.home.sessionVariables.DOOMDIR}"
           export DOOMLOCALDIR="${config.home.sessionVariables.DOOMLOCALDIR}"
@@ -61,17 +71,13 @@ in
         source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       '';
     };
-    emacs = {
-      enable = true;
-    };
+    emacs = { enable = true; };
 
     git = {
       enable = true;
       userName = "voli";
       userEmail = "vadim.oliinyk@gmail.com";
-      aliases = {
-        st = "status";
-      };
+      aliases = { st = "status"; };
     };
 
     tmux = {
@@ -106,22 +112,24 @@ in
 
     vscode = {
       enable = true;
-      extensions = (with pkgs.vscode-extensions; [
-        # ms-python.python
-        ms-vscode-remote.remote-ssh
-      ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-        name = "scala";
-        publisher = "scala-lang";
-        version = "0.5.3";
-        sha256 = "0isw8jh845hj2fw7my1i19b710v3m5qsjy2faydb529ssdqv463p";
-      }
-      {
-        name = "metals";
-        publisher = "scalameta";
-        version = "1.10.4";
-        sha256 = "0q6zjpdi98png4vpzz39q85nxmsh3h1nnan58saz5rr83d6jgj89";
-      }];
+      extensions = (with pkgs.vscode-extensions;
+        [
+          # ms-python.python
+          ms-vscode-remote.remote-ssh
+        ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "scala";
+            publisher = "scala-lang";
+            version = "0.5.3";
+            sha256 = "0isw8jh845hj2fw7my1i19b710v3m5qsjy2faydb529ssdqv463p";
+          }
+          {
+            name = "metals";
+            publisher = "scalameta";
+            version = "1.10.4";
+            sha256 = "0q6zjpdi98png4vpzz39q85nxmsh3h1nnan58saz5rr83d6jgj89";
+          }
+        ];
     };
   };
 
@@ -144,12 +152,18 @@ in
     metals
     graphviz
     #jetbrains.idea-community
+    nixfmt
 
     emacs-all-the-icons-fonts
   ];
 
+  services = {
+    syncthing = {
+      enable = true;
+      tray = true;
+    };
+    udiskie.enable = true;
+  };
 
   news.display = "silent";
-
-  home.file.".config/Code/User/settings.json".text = builtins.toJSON vscode-config.settings;
 }
