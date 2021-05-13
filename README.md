@@ -1,5 +1,13 @@
+- sh <(curl -L https://nixos.org/nix/install) --daemon
+- Restart shell/machine
+- sudo vim /etc/nix/nix.conf
+  Add allowed-users = dev <- this breaks PATH
+- nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  nix-channel --update
+
+  export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 - Clone this repository into ~/x directory
-- cd ~/.config && ln -s ~/x/nix/nixpkgs nixpkgs
+- cd ~/.config && ln -s ~/x/nix nixpkgs
 - export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 - home-manager switch
 

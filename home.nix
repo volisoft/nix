@@ -1,5 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+with import ./utils/symlink.nix { inherit lib; };
 let
   vscode-config = pkgs.callPackage ./apps/vscode-config.nix { };
   # Remove after aarch64-linux is added to the official pkgs derivation
@@ -25,7 +26,8 @@ in {
 
   home = {
     # Doom Emacs config
-    file.".emacs.d".source = "${config.xdg.configHome}/.emacs.d";
+    activation.xdg = symlink "${config.xdg.configHome}/.emacs.d"
+      "${config.home.homeDirectory}/.emacs.d";
     sessionPath = [ "${config.xdg.configHome}/.emacs.d/bin" ];
     sessionVariables = {
       DOOMDIR = "${config.xdg.configHome}/.doom.d";
@@ -66,10 +68,10 @@ in {
 
   programs = {
     bash = {
-      enable = true;
-      initExtra = ''
-        source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
-      '';
+      enable = false;
+      #    initExtra = ''
+      #      source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+      #    '';
     };
     emacs = { enable = true; };
 
