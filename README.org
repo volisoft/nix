@@ -1,0 +1,47 @@
+* Install
+** Install Nix
+#+begin_src options
+sh <(curl -L https://nixos.org/nix/install) --daemon
+nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+#+end_src
+** Restart shell/machine
+** [WARNING] Allow current user
+This may break PATH
+#+begin_src options
+# /etc/nix/nix.conf
+allowed-users = dev
+#+end_src
+** Add home manager nix channel
+#+begin_src
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+#+end_src
+** Update path to include home-manager
+#+begin_src shell
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+#+end_src
+** Setup home manager config
+Clone this repository into ~/x directory
+#+begin_src shell
+cd ~/.config && ln -s ~/x/nix nixpkgs
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+home-manager switch
+#+end_src
+* Generate RPI4 image
+nix-build '<nixpkgs/nixos>' -A config.system.build.sdImage -I nixos-config=./rpi4-image.nix
+
+References
+Docker builder https://gist.github.com/chrisanthropic/2e6d3645f20da8fd4c1f122113f89c06
+This was used as a reference https://pablo.tools/posts/computers/nixos-generate-raspberry-images/
+Example of RPI4 NixOS configuration.nix https://github.com/Robertof/nixos-docker-sd-image-builder/#raspberry-pi-3-and-4
+
+* Credits
+## Modularizing config
+https://github.com/mjstewart/nix-home-manager/blob/master/home.nix
+Wiki https://nixos.wiki/wiki/Home_Manager
+Example of home and system conifg with syncthing
+https://github.com/srid/nixos-config
+Another home config https://github.com/yrashk/nix-home/blob/master/home.nix
+Emacs prelude config https://gitlab.com/rycee/configurations/-/blob/master/user/emacs.nix
+Nix tutorial https://github.com/samdroid-apps/nix-articles/blob/master/05-using-functions.md 

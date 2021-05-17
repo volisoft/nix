@@ -1,0 +1,37 @@
+#+TITLE: Readme
+* Generate image
+#+begin_src
+nix-build '<nixpkgs/nixos>' -A config.system.build.sdImage -I nixos-config=./rpi4-image.nix
+#+end_src
+* Copy to medium
+** Linux
+#+begin_src
+lsblk
+...
+zstd -vdcfT6 [image file] | dd of=/dev/sdX status=progress bs=64K
+#+end_src
+
+** MacOS
+#+begin_src
+diskutil list
+# unmount volume (diskutil or Disk Utility)
+...
+zstd -vdcfT6 [image file] | dd of=/dev/diskX bs=1m`
+#+end_src
+
+* Network troubleshooting
+** DNS
+*** Could not resolve name
+Query DNS
+resolvectl query nixos.org
+Check resolved service logs
+journalctl -u systemd-resolved.service -f
+If signature-expired check system date. Update system date if necessary.
+sudo date -s "2 MAY 2021 20:00:00"
+Restart resolved service.
+systemctl restart systemd-resolved.service
+*** Couldn't resolve host name nix.org
+--option substitute false to nix-build or nix-env when I’m offline and it works ok. According to nix.conf(5) manpage this is what the option does:
+   substitute
+       If set to true (default), Nix will use binary substitutes if available. This option can
+       be disabled to force building from source.
