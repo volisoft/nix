@@ -4,6 +4,18 @@
 sh <(curl -L https://nixos.org/nix/install) --daemon
 nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 #+end_src
+** Install NixOS
+*** Generate RPI4 image
+nix-build '<nixpkgs/nixos>' -A config.system.build.sdImage -I nixos-config=./rpi4-image.nix
+
+References
+Docker builder https://gist.github.com/chrisanthropic/2e6d3645f20da8fd4c1f122113f89c06
+This was used as a reference https://pablo.tools/posts/computers/nixos-generate-raspberry-images/
+Example of RPI4 NixOS configuration.nix https://github.com/Robertof/nixos-docker-sd-image-builder/#raspberry-pi-3-and-4
+*** Setup installation medium
+Write image to disk and then add additional partitions with 'parted' if needed
+*** Immutable state in NixOS
+https://grahamc.com/blog/erase-your-darlings
 ** Restart shell/machine
 ** [WARNING] Allow current user
 This may break PATH
@@ -28,14 +40,6 @@ cd ~/.config && ln -s ~/x/nix nixpkgs
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 home-manager switch
 #+end_src
-* Generate RPI4 image
-nix-build '<nixpkgs/nixos>' -A config.system.build.sdImage -I nixos-config=./rpi4-image.nix
-
-References
-Docker builder https://gist.github.com/chrisanthropic/2e6d3645f20da8fd4c1f122113f89c06
-This was used as a reference https://pablo.tools/posts/computers/nixos-generate-raspberry-images/
-Example of RPI4 NixOS configuration.nix https://github.com/Robertof/nixos-docker-sd-image-builder/#raspberry-pi-3-and-4
-
 * Credits
 ## Modularizing config
 https://github.com/mjstewart/nix-home-manager/blob/master/home.nix

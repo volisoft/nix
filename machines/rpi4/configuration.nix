@@ -20,6 +20,7 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
   boot.consoleLogLevel = lib.mkDefault 7;
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
@@ -29,6 +30,7 @@
 
   networking = {
     hostName = "backup-rpi4";
+    hostId = "50e1a69b";
     defaultGateway = "192.168.1.1";
     wireless = {
       enable = true;
@@ -42,7 +44,7 @@
       };
     };
   };
-  environment.systemPackages = with pkgs; [ tcpdump git vim htop ];
+  environment.systemPackages = with pkgs; [ tcpdump git vim htop zstd nixfmt ];
   users.extraUsers = { dev = { isNormalUser = true; }; };
 
   services = {
@@ -69,5 +71,4 @@
   };
 
   time.timeZone = "UTC";
-
 }
