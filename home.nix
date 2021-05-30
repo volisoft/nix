@@ -5,6 +5,15 @@ let
   vscode-config = pkgs.callPackage ./apps/vscode-config.nix { };
   # Remove after aarch64-linux is added to the official pkgs derivation
   jetbrains = pkgs.callPackage ./apps/jbidea { };
+  doom-emacs-sync = "${pkgs.writeShellScript "doom-change" ''
+    export DOOMDIR="${config.home.sessionVariables.DOOMDIR}"
+    export DOOMLOCALDIR="${config.home.sessionVariables.DOOMLOCALDIR}"
+    if [ ! -d "$DOOMLOCALDIR" ]; then
+      ${config.xdg.configHome}/.emacs.d/bin/doom -y install
+    else
+      ${config.xdg.configHome}/.emacs.d/bin/doom -y sync -u
+    fi
+  ''}";
 in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -49,19 +58,14 @@ in {
     enable = true;
     configFile = {
       ".doom.d/config.el".source = ./apps/emacs/config.el;
-      ".doom.d/init.el".source = ./apps/emacs/init.el;
+      ".doom.d/init.el" = {
+        source = ./apps/emacs/init.el;
+        onChange = doom-emacs-sync;
+      };
       ".doom.d/packages.el".source = ./apps/emacs/packages.el;
       ".emacs.d" = {
         source = builtins.fetchGit "https://github.com/hlissner/doom-emacs";
-        onChange = "${pkgs.writeShellScript "doom-change" ''
-          export DOOMDIR="${config.home.sessionVariables.DOOMDIR}"
-          export DOOMLOCALDIR="${config.home.sessionVariables.DOOMLOCALDIR}"
-          if [ ! -d "$DOOMLOCALDIR" ]; then
-            ${config.xdg.configHome}/.emacs.d/bin/doom -y install
-          else
-            ${config.xdg.configHome}/.emacs.d/bin/doom -y sync -u
-          fi
-        ''}";
+        onChange = doom-emacs-sync;
       };
     };
   };
@@ -155,8 +159,20 @@ in {
     graphviz
     #jetbrains.idea-community
     nixfmt
+    clojure
 
+    # doom emacs dependencies
     emacs-all-the-icons-fonts
+    ripgrep
+    shellcheck
+    ledger
+    pandoc
+    fd
+    black # python formatter
+    python38Packages.pyflakes
+    python38Packages.isort
+    pipenv
+    python38Packages.pytest
   ];
 
   services = {
