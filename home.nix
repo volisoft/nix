@@ -31,7 +31,7 @@ in {
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.05";
+  home.stateVersion = "20.09";
 
   home = {
     # Doom Emacs config
@@ -76,6 +76,7 @@ in {
       #    initExtra = ''
       #      source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       #    '';
+      bashrcExtra = (builtins.readFile ./apps/bash/config.sh);
     };
     emacs = { enable = true; };
 
@@ -173,6 +174,7 @@ in {
     python38Packages.isort
     pipenv
     python38Packages.pytest
+    shfmt
   ];
 
   services = {
