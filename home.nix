@@ -72,7 +72,7 @@ in {
 
   programs = {
     bash = {
-      enable = false;
+      enable = true;
       #    initExtra = ''
       #      source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       #    '';
