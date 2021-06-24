@@ -153,6 +153,21 @@ in {
     zip
     unzip
     tree
+    zstd
+    exa # A modern replacement for ls.
+    # dust # A more intutive version of du written in rust.
+    duf # A better df alternative
+    fd # A simple, fast and user-friendly alternative to find.
+    ripgrep
+    fzf # A general purpose command-line fuzzy finder.
+    sd # An intuitive find & replace CLI (sed alternative).
+    tldr # A community effort to simplify man pages with practical examples.
+    bottom # Yet another cross-platform graphical process/system monitor.
+    glances # A top/htop alternative
+    gtop # System monitoring dashboard for terminal.
+    gping # ping, but with a graph.
+    procs # A modern replacement for ps written in Rust.
+    dog # A user-friendly command-line DNS client. dig on steroids
 
     #dev
     # clojure-lsp
@@ -179,8 +194,8 @@ in {
 
   services = {
     syncthing = {
-      enable = true;
-      tray = true;
+      enable = false;
+      tray.enable = false;
     };
     udiskie.enable = true;
   };
