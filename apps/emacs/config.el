@@ -29,7 +29,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/x/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -55,4 +55,6 @@
 
 (setq deft-directory "~/x/"
       deft-extensions '("org" "txt")
-      deft-recursive t)
+      deft-recursive t
+      lsp-clojure-custom-server-command '("java" "-jar" "/usr/local/bin/clojure-lsp.jar")
+      lsp-lens-enable t)
