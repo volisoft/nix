@@ -49,3 +49,12 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+;;; Code:
+(package! lsp-treemacs
+  :recipe (:host github :repo "emacs-lsp/lsp-treemacs"))
+(package! tlaplus :recipe
+          (:host nil
+           :repo "https://git.sdf.org/bch/tlamode"
+           :files ("*.el" "lisp/*.el")))
+(package! graphviz-dot-mode)
+;;; packages.el ends here
