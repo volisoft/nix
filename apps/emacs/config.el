@@ -59,4 +59,6 @@
       lsp-clojure-custom-server-command '("java" "-jar" "/usr/local/bin/clojure-lsp.jar")
       lsp-lens-enable t
       cider-ns-refresh-before-fn "dev.vadim/stop!"
-      cider-ns-refresh-after-fn "dev.vadim/start!")
+      cider-ns-refresh-after-fn "dev.vadim/start!"
+      graphviz-dot-view-command "dot -Tsvg -O %s")
+;;; config.el ends here

@@ -5,6 +5,7 @@ let
   vscode-config = pkgs.callPackage ./apps/vscode-config.nix { };
   # Remove after aarch64-linux is added to the official pkgs derivation
   jetbrains = pkgs.callPackage ./apps/jbidea { };
+  clojure = pkgs.callPackage ./apps/clojure { };
   doom-emacs-sync = "${pkgs.writeShellScript "doom-change" ''
     export DOOMDIR="${config.home.sessionVariables.DOOMDIR}"
     export DOOMLOCALDIR="${config.home.sessionVariables.DOOMLOCALDIR}"
