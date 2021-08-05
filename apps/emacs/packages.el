@@ -57,4 +57,5 @@
            :repo "https://git.sdf.org/bch/tlamode"
            :files ("*.el" "lisp/*.el")))
 (package! graphviz-dot-mode)
+(package! sayid)
 ;;; packages.el ends here

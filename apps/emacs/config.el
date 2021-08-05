@@ -56,9 +56,12 @@
 (setq deft-directory "~/x/"
       deft-extensions '("org" "txt")
       deft-recursive t
-      lsp-clojure-custom-server-command '("java" "-jar" "/usr/local/bin/clojure-lsp.jar")
+      lsp-clojure-custom-server-command '("java" "-jar" "/home/dev/.nix-profile/bin/clojure-lsp")
       lsp-lens-enable t
       cider-ns-refresh-before-fn "dev.vadim/stop!"
       cider-ns-refresh-after-fn "dev.vadim/start!"
       graphviz-dot-view-command "dot -Tsvg -O %s")
+(after! 'clojure-mode
+   '(sayid-setup-package))
+
 ;;; config.el ends here

@@ -1,11 +1,12 @@
 { config, pkgs, lib, ... }:
-
+# https://unix.stackexchange.com/questions/272660/how-to-split-etc-nixos-configuration-nix-into-separate-modules
 with import ./utils/symlink.nix { inherit lib; };
 let
   vscode-config = pkgs.callPackage ./apps/vscode-config.nix { };
   # Remove after aarch64-linux is added to the official pkgs derivation
   jetbrains = pkgs.callPackage ./apps/jbidea { };
   clojure = pkgs.callPackage ./apps/clojure { };
+  clojure-lsp = pkgs.callPackage ./apps/clojure-lsp { };
   doom-emacs-sync = "${pkgs.writeShellScript "doom-change" ''
     export DOOMDIR="${config.home.sessionVariables.DOOMDIR}"
     export DOOMLOCALDIR="${config.home.sessionVariables.DOOMLOCALDIR}"
@@ -171,7 +172,7 @@ in {
     dog # A user-friendly command-line DNS client. dig on steroids
 
     #dev
-    # clojure-lsp
+    clojure-lsp
     metals
     graphviz
     #jetbrains.idea-community
