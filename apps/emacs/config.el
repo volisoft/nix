@@ -60,7 +60,9 @@
       lsp-lens-enable t
       cider-ns-refresh-before-fn "dev.vadim/stop!"
       cider-ns-refresh-after-fn "dev.vadim/start!"
-      graphviz-dot-view-command "dot -Tsvg -O %s")
+      graphviz-dot-view-command "dot -Tsvg -O %s"
+      clojure-align-forms-automatically t
+      clojure-toplevel-inside-comment-form t)
 (after! 'clojure-mode
    '(sayid-setup-package))
 

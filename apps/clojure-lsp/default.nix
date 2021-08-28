@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   pname = "clojure-lsp";
-  version = "2021.08.03-13.33.03";
+  version = "2021.08.16-19.02.30";
   src = fetchFromGitHub {
     owner = pname;
     repo = pname;
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   jar = fetchurl {
     url =
       "https://github.com/clojure-lsp/clojure-lsp/releases/download/${version}/clojure-lsp.jar";
-    sha256 = "0wwm2cd45zbnvr1p6lw60xdfal4jz91n9g5npvi00mav7qyzchhb";
+    sha256 = "17y6wrybavy1kijdfd0dpb3kbkrj1l7vj9kdb896ai0b468d29qr";
   };
 
   buildInputs = [ ];
