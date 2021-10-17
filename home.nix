@@ -178,6 +178,7 @@ in {
     #jetbrains.idea-community
     nixfmt
     clojure
+    chromium
 
     # doom emacs dependencies
     emacs-all-the-icons-fonts
