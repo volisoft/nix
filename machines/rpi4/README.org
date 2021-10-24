@@ -35,3 +35,8 @@ systemctl restart systemd-resolved.service
    substitute
        If set to true (default), Nix will use binary substitutes if available. This option can
        be disabled to force building from source.
+
+* Run virtual machine
+#+begin_src shell
+./result/bin/run-nixos-vm -cpu max -machine accel=tcg,gic-version=max
+#+end_src
