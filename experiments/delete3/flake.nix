@@ -12,6 +12,17 @@
   };
   outputs = { self, nixpkgs }: {
     packages.aarch64-linux.hello = nixpkgs.legacyPackages.aarch64-linux.hello;
+    # In shell:
+    # nix run '.#test.vm'
+    # error: unable to execute '/nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/nixos-vm': No such file or directory
+    # This path is incorrect. Replace it with:
+    # /nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/run-nixos-vm
+    # Could not access KVM kernel module: No such file or directory
+    # qemu-system-aarch64: failed to initialize kvm: No such file or directory
+    # This happens when KVM kernel module is not loaded (e.g. in a virtual machine).
+    # In that case run QEMU in emulation mode:
+    # /nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/run-nixos-vm -cpu max -machine accel=tcg,gic-version=max
+    # /nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/run-nixos-vm -cpu max -smp 8 -machine accel=tcg,gic-version=max
     packages.aarch64-linux.test = let
       db = {
         database = "postgres";
