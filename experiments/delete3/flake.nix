@@ -1,28 +1,32 @@
 {
   description = ''
-        Modified to use flakes from
-        https://www.haskellforall.com/2020/11/how-to-use-nixos-for-lightweight.html.
+    Modified to use flakes from
+    https://www.haskellforall.com/2020/11/how-to-use-nixos-for-lightweight.html.
     nix-shell -p nixUnstable --run 'sudo nixos-install --flake github:kanashimia/nixos#literal-potato'
-      '';
+    After changes:
+    nix flake lock --recreate-lock-file --refresh
+    nix run '.#test.vm'
+          '';
   inputs = {
-    # nixpkgs.url =
-    #   "https://github.com/NixOS/nixpkgs/archive/58f9c4c7d3a42c912362ca68577162e38ea8edfb.tar.gz";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
+    nixpkgs.url =
+      "https://github.com/NixOS/nixpkgs/archive/58f9c4c7d3a42c912362ca68577162e38ea8edfb.tar.gz";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
     # "github:nixos/nixpkgs";
   };
   outputs = { self, nixpkgs }: {
     packages.aarch64-linux.hello = nixpkgs.legacyPackages.aarch64-linux.hello;
     # In shell:
     # nix run '.#test.vm'
-    # error: unable to execute '/nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/nixos-vm': No such file or directory
+    # error: unable to execute '.../bin/nixos-vm': No such file or directory
     # This path is incorrect. Replace it with:
-    # /nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/run-nixos-vm
+    # .../bin/run-nixos-vm
     # Could not access KVM kernel module: No such file or directory
     # qemu-system-aarch64: failed to initialize kvm: No such file or directory
     # This happens when KVM kernel module is not loaded (e.g. in a virtual machine).
     # In that case run QEMU in emulation mode:
-    # /nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/run-nixos-vm -cpu max -machine accel=tcg,gic-version=max
-    # /nix/store/wq12nsfnlj0x0vz1z67gzrxc2z9ahq4w-nixos-vm/bin/run-nixos-vm -cpu max -smp 8 -machine accel=tcg,gic-version=max
+    # .../bin/run-nixos-vm -cpu max -machine accel=tcg,gic-version=max
+    # .../bin/run-nixos-vm -cpu max -smp 8 -machine accel=tcg,gic-version=max
+    # If you cannot log in then delete qcow2 file and restart the VM.
     packages.aarch64-linux.test = let
       db = {
         database = "postgres";
@@ -31,7 +35,6 @@
         username = "authenticator";
         password = "mysecretpassword";
         webRole = "web_anon";
-        flake = false;
       };
     in import "${nixpkgs}/nixos" {
       system = "aarch64-linux";
@@ -68,7 +71,6 @@
 
         users = {
           mutableUsers = false;
-          groups = { authenticator = { }; };
 
           users = {
             # For ease of debugging the VM as the `root` user

@@ -49,3 +49,12 @@ https://github.com/srid/nixos-config
 Another home config https://github.com/yrashk/nix-home/blob/master/home.nix
 Emacs prelude config https://gitlab.com/rycee/configurations/-/blob/master/user/emacs.nix
 Nix tutorial https://github.com/samdroid-apps/nix-articles/blob/master/05-using-functions.md 
+
+Check if broken
+nix-store --verify --check-contents
+nix-collect-garbage --delete-older-than 5d
+
+
+
+nix-env -u
+nix-store --verify --check-contents --repair
