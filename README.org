@@ -4,6 +4,33 @@
 sh <(curl -L https://nixos.org/nix/install) --daemon
 nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 #+end_src
+** Install Ubuntu VM, QEMU, MacOS
+After installation run these commands
+#+begin_src shell
+sudo apt install tasksel
+sudo tasksel install ubuntu-desktop
+
+sudo apt remove libreoffice-* && \
+sudo apt remove rhythmbox* && \
+sudo apt remove thunderbird* && \
+sudo apt update && sudo apt full-upgrade
+
+sudo snap install codium --classic && \
+sudo snap install emacs --edge --classic && \
+sudo snap install openjdk && \
+sudo apt install spice-vdagent spice-webdavd && \
+sudo reboot
+
+mkdir ~/x
+
+# install doom emacs
+sudo apt install gcc && \
+sudo apt install libgccjit-10-dev && \
+git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d && \
+~/.emacs.d/bin/doom install
+
+sh <(curl -L https://nixos.org/nix/instlal) --daemon
+#+end_src
 ** Install NixOS
 *** Generate RPI4 image
 nix-build '<nixpkgs/nixos>' -A config.system.build.sdImage -I nixos-config=./rpi4-image.nix
@@ -58,3 +85,6 @@ nix-collect-garbage --delete-older-than 5d
 
 nix-env -u
 nix-store --verify --check-contents --repair
+* Data management
+** ZFS, BTRFS, MDADM+DM
+[[https://www.unixsheikh.com/articles/battle-testing-zfs-btrfs-and-mdadm-dm.html][Battle testing ZFS, Btrfs and mdadm+dm-integrity]]
