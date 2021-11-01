@@ -1,5 +1,8 @@
 {
   description = ''
+    Inspired by https://github.com/astralbijection/infra.
+    Setups overview: https://nixos.wiki/wiki/Comparison_of_NixOS_setups
+
     Modified to use flakes from
     https://www.haskellforall.com/2020/11/how-to-use-nixos-for-lightweight.html.
     nix-shell -p nixUnstable --run 'sudo nixos-install --flake github:kanashimia/nixos#literal-potato'
@@ -41,10 +44,7 @@
       rpi4 = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
 
-        modules = with self.nixosModules; [
-          ../../machines/rpi4/configuration.nix
-          pi
-        ];
+        modules = with self.nixosModules; [ ./configuration.nix pi ];
       };
     };
 

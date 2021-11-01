@@ -5,11 +5,13 @@ let
       "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
       # ./configuration.nix
     ];
+
+    sdImage.compressImage = false;
   };
 in nixpkgs.lib.nixosSystem {
 
   system = "aarch64-linux";
-  modules = [ image ];
+  modules = [ image ./configuration.nix ];
   # boot = {
   #   # The serial ports listed here are:
   #   # - ttyS0: for Tegra (Jetson TX1)
