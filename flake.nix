@@ -1,11 +1,31 @@
 {
-  description = "A very basic flake";
+  description = "Home Manager configuration";
 
-  outputs = { self, nixpkgs }: {
+  inputs = {
+    nixpkgs.url = "flake:nixpkgs";
+    homeManager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
-    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
+  outputs = { self, nixpkgs, homeManager }: {
+    homeConfigurations = {
+      "dev@devmachine" = homeManager.lib.homeManagerConfiguration {
+        configuration  = import ./home.nix;
 
-    defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
+       # {pkgs, ...}: {
+       #   programs.home-manager.enable = true;
+       #   home.packages = [pkgs.hello];
+       # };
+
+        system = "aarch64-linux";
+        homeDirectory = "/home/dev";
+        username = "dev";
+        stateVersion = "20.09";
+      };
+    };
+
 
   };
 }

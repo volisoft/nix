@@ -1,10 +1,9 @@
 { lib }:
 
-with import <home-manager/modules/lib/dag.nix> { inherit lib; };
-
+with lib.hm.dag  ;
 {
   symlink = src: dst:
-    dagEntryAfter [ "installPackages" ] ''
+    entryAfter [ "installPackages" ] ''
       dir="$(dirname ${dst})"
       if [ ! -d "$dir" ]; then
       mkdir -p "$dir"

@@ -88,3 +88,9 @@ nix-store --verify --check-contents --repair
 * Data management
 ** ZFS, BTRFS, MDADM+DM
 [[https://www.unixsheikh.com/articles/battle-testing-zfs-btrfs-and-mdadm-dm.html][Battle testing ZFS, Btrfs and mdadm+dm-integrity]]
+* Updates
+To apply updates:
+#+begin_src shell
+nixFlakes build '.#homeConfigurations."dev@devmachine".activationPackage'
+result/activate
+#+end_src

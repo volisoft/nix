@@ -66,7 +66,11 @@ in {
       };
       ".doom.d/packages.el".source = ./apps/emacs/packages.el;
       ".emacs.d" = {
-        source = builtins.fetchGit "https://github.com/hlissner/doom-emacs";
+        source = builtins.fetchGit {
+          ref = "develop";
+          rev = "bac7ccb970847125919ce32043dce84cfcca16b8";
+          url = "https://github.com/hlissner/doom-emacs";
+        };
         onChange = doom-emacs-sync;
       };
     };
