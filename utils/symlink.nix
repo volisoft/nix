@@ -1,7 +1,6 @@
 { lib }:
 
-with lib.hm.dag  ;
-{
+with lib.hm.dag; {
   symlink = src: dst:
     entryAfter [ "installPackages" ] ''
       dir="$(dirname ${dst})"

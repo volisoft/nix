@@ -12,20 +12,13 @@
   outputs = { self, nixpkgs, homeManager }: {
     homeConfigurations = {
       "dev@devmachine" = homeManager.lib.homeManagerConfiguration {
-        configuration  = import ./home.nix;
-
-       # {pkgs, ...}: {
-       #   programs.home-manager.enable = true;
-       #   home.packages = [pkgs.hello];
-       # };
-
+        configuration = import ./home.nix;
         system = "aarch64-linux";
         homeDirectory = "/home/dev";
         username = "dev";
         stateVersion = "20.09";
       };
     };
-
 
   };
 }
