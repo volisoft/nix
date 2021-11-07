@@ -1,14 +1,10 @@
 { config, lib, pkgs, modulesPath, ... }: {
-  imports = [
-    # ./nix
-    # ./nix/home-manager.nix
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
+  boot.loader.raspberryPi.firmwareConfig = "dtparam=sd_poll_once=on";
   boot.consoleLogLevel = lib.mkDefault 7;
   # Required for nix-fort
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -75,13 +71,6 @@
 
   time.timeZone = "UTC";
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-  };
   swapDevices = [ ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 

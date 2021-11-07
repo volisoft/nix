@@ -8,10 +8,16 @@
     nix-shell -p nixUnstable --run 'sudo nixos-install --flake github:kanashimia/nixos#literal-potato'
     After changes:
     nix flake lock --recreate-lock-file --refresh
-    nix run '.#test.vm'
+    nix run '.#diskImages.rpi4.config.system.build.vm'
+    .../bin/run-nixos-vm -cpu max -smp 8 -machine accel=tcg,gic-version=max -vga std -m 800M
+    QEMU options https://wiki.gentoo.org/wiki/QEMU/Options
+
+    Produce image:
+    nix build '.#diskImages.rpi4.config.system.build.sdImage'
           '';
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
     # "github:nixos/nixpkgs";
   };
@@ -41,13 +47,18 @@
     #   };
     # };
 
-    nixosModules = { pi = (import ./rpi4-image.nix) inputs; };
+    # nixosModules = { pi = (import ./rpi4-image.nix) inputs; };
     # see https://github.com/considerate/nixos-odroidhc4/blob/master/nixpkgs/default.nix
-    diskImages = let img = (import ./rpi4-image.nix) inputs;
-    in {
-      rpi4 =
-        # This line calls https://github.com/NixOS/nixpkgs/blob/054bac1eca0f242f226bace4568a4f98df180c7d/flake.nix#L68
-        img.config.system.build.vm;
+    diskImages = {
+      rpi4 = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          # ./machines/ether/image.nix
+          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
+          ./machines/ether/hardware.nix
+          ./machines/ether/configuration.nix
+        ];
+      };
     };
   };
 }

@@ -1,7 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [ "${modulesPath}/installer/scan/not-detected.nix" ];
 
   boot.initrd.availableKernelModules = [
     "ata_generic"
@@ -15,17 +15,22 @@
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelPackages =
+    lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = lib.mkForce [ "zfs" ];
 
-  fileSystems."/" = {
+  fileSystems."/" = lib.mkForce {
     device = "rpool/root/nixos";
     fsType = "zfs";
+    options = [ "noatime" ];
   };
 
   fileSystems."/nix" = {
     device = "rpool/nix";
     fsType = "zfs";
     neededForBoot = true;
+    options = [ "noatime" ];
   };
 
   fileSystems."/home" = {
