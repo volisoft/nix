@@ -14,6 +14,7 @@
 
     Produce image:
     nix build '.#diskImages.rpi4.config.system.build.sdImage'
+    /nix/store/3lzfqqlajj85ml16j1517vh2qmssi8vz-nixos-vm/bin/run-backup-rpi4-vm -cpu max -smp 8 -machine accel=tcg,gic-version=max -vga std -m 800M -net user,hostfwd=tcp::10022-:22 -net nic
           '';
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -53,8 +54,8 @@
       rpi4 = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
-          # ./machines/ether/image.nix
-          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
+          # "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
+          ./machines/ether/image.nix
           ./machines/ether/hardware.nix
           ./machines/ether/configuration.nix
         ];

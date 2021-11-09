@@ -39,7 +39,8 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8d11e1ec-50db-4aa3-a920-788e7f88b68e";
+    # device = "/dev/disk/by-uuid/8d11e1ec-50db-4aa3-a920-788e7f88b68e";
+    device = "/dev/disk/by-uuid/FIRMWARE";
     fsType = "ext4";
   };
 
@@ -47,6 +48,6 @@
 
   nix.maxJobs = lib.mkDefault 2;
   # High-DPI console
-  console.font =
-    lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  # console.font =
+  #   lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 }
