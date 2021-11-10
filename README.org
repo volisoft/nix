@@ -94,3 +94,11 @@ To apply updates:
 nixFlakes build '.#homeConfigurations."dev@devmachine".activationPackage'
 result/activate
 #+end_src
+* QEMU VM
+
+#+begin_src shell
+export QEMU_NET_OPTS="hostfwd=tcp::2221-:22,hostfwd=tcp::8080-:80"
+result/bin/run-nixos-vm
+ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no root@localhost -p 2221
+
+#+end_src

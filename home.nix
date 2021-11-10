@@ -200,6 +200,11 @@ in {
     pipenv
     python38Packages.pytest
     shfmt
+
+    # VM
+    libvirt
+    virt-manager
+    qemu
   ];
 
   services = {
