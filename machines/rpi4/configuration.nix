@@ -12,6 +12,8 @@
   boot.consoleLogLevel = lib.mkDefault 7;
   # Required for nix-fort
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernelPackages =
+    lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   systemd.network = {
     enable = true;

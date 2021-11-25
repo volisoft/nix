@@ -186,6 +186,7 @@ in {
     nixfmt
     clojure
     chromium
+    firefox
 
     # doom emacs dependencies
     emacs-all-the-icons-fonts
