@@ -79,6 +79,10 @@
       # Dotfiles: home-manager
       # Network: automatically configured
       # Desktop: xfce
+      # nix run github:nix-community/nixos-generators -- --flake ".#dev-vm" -f iso
+      # cp /nix/store/bvrlcjbvspmxnd01xqi0hdy2pl1yidyk-nixos.iso/iso/nixos.iso /run/user/1000/gvfs/dav+sd:host=Spice%2520client%2520folder._webdav._tcp.local
+      # nix build '.#nixosConfigurations.dev-vm.config.system.build.vm'
+      # ./result/bin/run-nixos-vm -cpu max -smp 8 -machine accel=tcg,gic-version=max -vga std -m 800M
       dev-vm = (nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem) {
         system = "aarch64-linux";
         modules = [

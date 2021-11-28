@@ -75,6 +75,9 @@ in {
       };
     };
   };
+  # Home manager starts xsession and injects session variables like DOOMDIR.
+  xsession.enable = true;
+  fonts.fontconfig.enable = true;
 
   programs = {
     bash = {

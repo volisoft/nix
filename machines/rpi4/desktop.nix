@@ -16,6 +16,7 @@
     };
     desktopManager.xfce.enable = true;
   };
+  windowManager = { i3.enable = true; };
 
   hardware.pulseaudio.enable = true;
   hardware.raspberry-pi."4".fkms-3d.enable = true;

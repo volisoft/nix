@@ -1,6 +1,5 @@
 { config, lib, pkgs, modulesPath, ... }: {
-  environment.systemPackages = with pkgs; [ tcpdump git vim zstd nixfmt ];
-
+  environment.systemPackages = with pkgs; [ tcpdump git vim zstd nixfmt xclip ];
   services = {
     openssh = {
       enable = true;
